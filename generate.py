@@ -175,9 +175,9 @@ header{{background:#0078cc;color:#fff;padding:0 32px;height:58px;display:flex;al
   display:flex;align-items:center;gap:12px;font-size:13px;color:#aaa}}
 .meta-bar .date-str{{font-weight:700;font-size:16px;color:#fff}}
 
-/* Gallery — 2열 고정 */
-.gallery{{max-width:1100px;margin:0 auto;padding:28px 24px;
-  display:grid;grid-template-columns:repeat(2,1fr);gap:24px}}
+/* Gallery — 3열 고정 */
+.gallery{{max-width:1400px;margin:0 auto;padding:28px 24px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:24px}}
 
 /* Card */
 .card{{background:#1e1e1e;border-radius:12px;overflow:hidden;
@@ -202,10 +202,13 @@ footer a:hover{{text-decoration:underline}}
 /* Empty */
 .empty{{grid-column:1/-1;text-align:center;padding:80px;color:#555;font-size:15px}}
 
-@media(max-width:640px){{
-  .gallery{{grid-template-columns:1fr;gap:16px;padding:16px}}
+@media(max-width:900px){{
+  .gallery{{grid-template-columns:repeat(2,1fr);gap:16px;padding:16px}}
   header{{padding:0 16px}}
   .meta-bar{{padding:10px 16px}}
+}}
+@media(max-width:540px){{
+  .gallery{{grid-template-columns:1fr;gap:14px;padding:12px}}
 }}
 </style>
 </head>
