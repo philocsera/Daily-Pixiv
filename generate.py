@@ -205,75 +205,80 @@ HTML_TEMPLATE = """\
 <title>Pixiv 일간 — 신규 진입 작품 {display_date}</title>
 <style>
 *,*::before,*::after{{box-sizing:border-box;margin:0;padding:0}}
-body{{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Sans",sans-serif;background:#f5f5f5;color:#333}}
+body{{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Sans",sans-serif;background:#111;color:#e0e0e0}}
 
 /* Header */
-header{{background:#0096fa;color:#fff;padding:0 24px;height:56px;display:flex;align-items:center;gap:14px;
-  position:sticky;top:0;z-index:100;box-shadow:0 2px 6px rgba(0,0,0,.2)}}
+header{{background:#0078cc;color:#fff;padding:0 32px;height:58px;display:flex;align-items:center;gap:14px;
+  position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,.5)}}
 .logo{{font-size:22px;font-weight:800;letter-spacing:-0.5px}}
 .logo span{{color:#ffe44d}}
-.subtitle{{font-size:13px;opacity:.85}}
+.subtitle{{font-size:13px;opacity:.8}}
 
 /* Meta bar */
-.meta-bar{{background:#fff;border-bottom:1px solid #e8e8e8;padding:10px 24px;
-  display:flex;align-items:center;flex-wrap:wrap;gap:12px;font-size:13px;color:#555}}
-.meta-bar .date-str{{font-weight:700;font-size:15px;color:#222}}
-.meta-bar .stats{{margin-left:auto;display:flex;gap:16px}}
+.meta-bar{{background:#1a1a1a;border-bottom:1px solid #2a2a2a;padding:12px 32px;
+  display:flex;align-items:center;flex-wrap:wrap;gap:12px;font-size:13px;color:#aaa}}
+.meta-bar .date-str{{font-weight:700;font-size:16px;color:#fff}}
+.meta-bar .stats{{margin-left:auto;display:flex;gap:20px}}
 .meta-bar .stat{{text-align:right}}
-.meta-bar .stat-num{{font-size:18px;font-weight:700;color:#0096fa}}
-.meta-bar .stat-label{{font-size:11px;color:#999}}
+.meta-bar .stat-num{{font-size:20px;font-weight:700;color:#4db8ff}}
+.meta-bar .stat-label{{font-size:11px;color:#666}}
 
 /* Legend */
-.legend{{background:#fff;border-bottom:1px solid #e8e8e8;padding:8px 24px;
-  display:flex;gap:16px;align-items:center;font-size:12px;color:#666}}
+.legend{{background:#1a1a1a;border-bottom:1px solid #2a2a2a;padding:10px 32px;
+  display:flex;gap:16px;align-items:center;font-size:12px;color:#777}}
 .legend-badge{{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:12px;font-weight:600}}
-.badge-first{{background:#ff4060;color:#fff}}
-.badge-prev{{background:#ff8c00;color:#fff}}
+.badge-first{{background:#cc2244;color:#fff}}
+.badge-prev{{background:#cc6600;color:#fff}}
 
-/* Gallery */
-.gallery{{max-width:1440px;margin:0 auto;padding:24px 16px;
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(184px,1fr));gap:16px}}
+/* Gallery — 3열 고정 */
+.gallery{{max-width:1200px;margin:0 auto;padding:28px 24px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:20px}}
 
 /* Card */
-.card{{background:#fff;border-radius:10px;overflow:hidden;
-  box-shadow:0 1px 4px rgba(0,0,0,.08);transition:box-shadow .2s,transform .2s;position:relative}}
-.card:hover{{box-shadow:0 6px 20px rgba(0,0,0,.16);transform:translateY(-3px)}}
+.card{{background:#1e1e1e;border-radius:12px;overflow:hidden;
+  box-shadow:0 2px 8px rgba(0,0,0,.4);transition:box-shadow .2s,transform .2s;position:relative}}
+.card:hover{{box-shadow:0 8px 28px rgba(0,0,0,.7);transform:translateY(-4px)}}
 .thumb-link{{display:block;position:relative;overflow:hidden;
-  background:#e8e8e8;aspect-ratio:1/1;text-decoration:none}}
-.thumb-link img{{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}}
-.card:hover .thumb-link img{{transform:scale(1.05)}}
+  background:#2a2a2a;aspect-ratio:1/1;text-decoration:none}}
+.thumb-link img{{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s}}
+.card:hover .thumb-link img{{transform:scale(1.06)}}
 .img-placeholder{{width:100%;height:100%;display:flex;align-items:center;justify-content:center;
-  font-size:12px;color:#aaa}}
+  font-size:13px;color:#555}}
 
 /* Overlays */
-.rank-num{{position:absolute;top:7px;left:7px;background:rgba(0,0,0,.55);color:#fff;
-  font-size:11px;font-weight:700;padding:2px 7px;border-radius:5px}}
-.badge{{position:absolute;top:7px;right:7px;font-size:10px;font-weight:700;
-  padding:3px 8px;border-radius:5px;line-height:1.5;white-space:nowrap}}
-.page-count{{position:absolute;bottom:7px;right:7px;background:rgba(0,0,0,.6);
-  color:#fff;font-size:10px;padding:2px 6px;border-radius:4px}}
-.ugoira-mark{{position:absolute;bottom:7px;left:7px;background:rgba(0,150,250,.9);
-  color:#fff;font-size:10px;padding:2px 6px;border-radius:4px;font-weight:700}}
+.rank-num{{position:absolute;top:10px;left:10px;background:rgba(0,0,0,.7);color:#fff;
+  font-size:13px;font-weight:700;padding:3px 9px;border-radius:6px}}
+.badge{{position:absolute;top:10px;right:10px;font-size:11px;font-weight:700;
+  padding:4px 10px;border-radius:6px;line-height:1.5;white-space:nowrap}}
+.page-count{{position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,.7);
+  color:#ddd;font-size:11px;padding:3px 8px;border-radius:5px}}
+.ugoira-mark{{position:absolute;bottom:10px;left:10px;background:rgba(0,120,200,.9);
+  color:#fff;font-size:11px;padding:3px 8px;border-radius:5px;font-weight:700}}
 
 /* Card body */
-.card-body{{padding:10px 10px 12px}}
-.card-title{{font-size:13px;font-weight:600;color:#222;white-space:nowrap;
-  overflow:hidden;text-overflow:ellipsis;margin-bottom:3px}}
-.card-author{{font-size:11px;color:#888;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:4px}}
+.card-body{{padding:14px 14px 16px}}
+.card-title{{font-size:15px;font-weight:600;color:#eee;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;margin-bottom:5px}}
+.card-author{{font-size:13px;color:#888;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:6px}}
 .card-author a{{color:inherit;text-decoration:none}}
-.card-author a:hover{{color:#0096fa}}
-.card-meta{{font-size:10px;color:#bbb}}
+.card-author a:hover{{color:#4db8ff}}
+.card-meta{{font-size:12px;color:#555}}
 
 /* Footer */
-footer{{text-align:center;padding:32px;font-size:12px;color:#bbb}}
+footer{{text-align:center;padding:40px;font-size:12px;color:#444}}
+footer a{{color:#4db8ff;text-decoration:none}}
+footer a:hover{{text-decoration:underline}}
 
 /* Empty */
-.empty{{grid-column:1/-1;text-align:center;padding:80px;color:#ccc;font-size:15px}}
+.empty{{grid-column:1/-1;text-align:center;padding:80px;color:#555;font-size:15px}}
 
-@media(max-width:640px){{
-  .gallery{{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;padding:12px 8px}}
-  header{{padding:0 12px}}
-  .meta-bar,.legend{{padding:8px 12px}}
+@media(max-width:900px){{
+  .gallery{{grid-template-columns:repeat(2,1fr);gap:14px;padding:16px}}
+  header{{padding:0 16px}}
+  .meta-bar,.legend{{padding:10px 16px}}
+}}
+@media(max-width:540px){{
+  .gallery{{grid-template-columns:1fr;gap:12px;padding:12px}}
 }}
 </style>
 </head>
