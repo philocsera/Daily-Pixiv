@@ -1,0 +1,45 @@
+name: Daily Pixiv Ranking Update
+
+on:
+  schedule:
+    # 매일 00:30 JST (= 15:30 UTC 전날) 실행
+    - cron: "30 15 * * *"
+  workflow_dispatch:  # Actions 탭에서 수동 실행 가능
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Generate ranking HTML + download images
+        run: python generate.py
+
+      - name: Prepare deploy directory
+        run: |
+          mkdir -p dist
+          mv index.html img dist/
+
+      # gh-pages 브랜치에 force-orphan으로 배포 (히스토리 누적 없음)
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: gh-pages
+          force_orphan: true
+          commit_message: "chore: daily ranking update"
