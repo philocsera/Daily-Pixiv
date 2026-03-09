@@ -114,15 +114,7 @@ CARD_TMPL = """\
   <a class="thumb-link" href="https://www.pixiv.net/artworks/{illust_id}" target="_blank" rel="noopener">
     {img_tag}
     <span class="rank-num">#{rank}</span>
-    <span class="badge {badge_cls}">{badge_lbl}</span>
-    {page_badge}
-    {ugoira_badge}
   </a>
-  <div class="card-body">
-    <p class="card-title" title="{title_escaped}">{title_truncated}</p>
-    <p class="card-author"><a href="https://www.pixiv.net/users/{user_id}" target="_blank" rel="noopener">{user_name}</a></p>
-    <p class="card-meta">{likes} 좋아요 · {views} 조회</p>
-  </div>
 </div>"""
 
 
@@ -144,14 +136,6 @@ def make_cards(works: list[dict]) -> str:
         illust_id = w["illust_id"]
         rank = w["rank"]
         title = w.get("title", "")
-        user_name = w.get("user_name", "")
-        user_id = w.get("user_id", "")
-        page_count = int(w.get("illust_page_count", 1))
-        illust_type = int(w.get("illust_type", 0))
-        rating_count = w.get("rating_count", 0)
-        view_count = w.get("view_count", 0)
-
-        badge_lbl, badge_cls = badge_info(w)
 
         local_img = w.get("_local_img", "")
         if local_img:
@@ -159,38 +143,10 @@ def make_cards(works: list[dict]) -> str:
         else:
             img_tag = '<div class="img-placeholder">이미지 없음</div>'
 
-        page_badge = (
-            f'<span class="page-count">&#128196; {page_count}p</span>'
-            if page_count > 1 else ""
-        )
-        ugoira_badge = (
-            '<span class="ugoira-mark">GIF</span>'
-            if illust_type == 2 else ""
-        )
-
-        title_truncated = escape_html(title[:30] + ("…" if len(title) > 30 else ""))
-        title_escaped = escape_html(title)
-
-        def fmt_num(n) -> str:
-            try:
-                return f"{int(n):,}"
-            except Exception:
-                return str(n)
-
         parts.append(CARD_TMPL.format(
             illust_id=illust_id,
             rank=rank,
-            badge_cls=badge_cls,
-            badge_lbl=badge_lbl,
-            page_badge=page_badge,
-            ugoira_badge=ugoira_badge,
             img_tag=img_tag,
-            title_escaped=title_escaped,
-            title_truncated=title_truncated,
-            user_id=user_id,
-            user_name=escape_html(user_name),
-            likes=fmt_num(rating_count),
-            views=fmt_num(view_count),
         ))
     print()
     return "\n".join(parts)
@@ -216,19 +172,8 @@ header{{background:#0078cc;color:#fff;padding:0 32px;height:58px;display:flex;al
 
 /* Meta bar */
 .meta-bar{{background:#1a1a1a;border-bottom:1px solid #2a2a2a;padding:12px 32px;
-  display:flex;align-items:center;flex-wrap:wrap;gap:12px;font-size:13px;color:#aaa}}
+  display:flex;align-items:center;gap:12px;font-size:13px;color:#aaa}}
 .meta-bar .date-str{{font-weight:700;font-size:16px;color:#fff}}
-.meta-bar .stats{{margin-left:auto;display:flex;gap:20px}}
-.meta-bar .stat{{text-align:right}}
-.meta-bar .stat-num{{font-size:20px;font-weight:700;color:#4db8ff}}
-.meta-bar .stat-label{{font-size:11px;color:#666}}
-
-/* Legend */
-.legend{{background:#1a1a1a;border-bottom:1px solid #2a2a2a;padding:10px 32px;
-  display:flex;gap:16px;align-items:center;font-size:12px;color:#777}}
-.legend-badge{{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:12px;font-weight:600}}
-.badge-first{{background:#cc2244;color:#fff}}
-.badge-prev{{background:#cc6600;color:#fff}}
 
 /* Gallery — 2열 고정 */
 .gallery{{max-width:1100px;margin:0 auto;padding:28px 24px;
@@ -248,21 +193,6 @@ header{{background:#0078cc;color:#fff;padding:0 32px;height:58px;display:flex;al
 /* Overlays */
 .rank-num{{position:absolute;top:10px;left:10px;background:rgba(0,0,0,.7);color:#fff;
   font-size:13px;font-weight:700;padding:3px 9px;border-radius:6px}}
-.badge{{position:absolute;top:10px;right:10px;font-size:11px;font-weight:700;
-  padding:4px 10px;border-radius:6px;line-height:1.5;white-space:nowrap}}
-.page-count{{position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,.7);
-  color:#ddd;font-size:11px;padding:3px 8px;border-radius:5px}}
-.ugoira-mark{{position:absolute;bottom:10px;left:10px;background:rgba(0,120,200,.9);
-  color:#fff;font-size:11px;padding:3px 8px;border-radius:5px;font-weight:700}}
-
-/* Card body */
-.card-body{{padding:14px 14px 16px}}
-.card-title{{font-size:15px;font-weight:600;color:#eee;white-space:nowrap;
-  overflow:hidden;text-overflow:ellipsis;margin-bottom:5px}}
-.card-author{{font-size:13px;color:#888;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:6px}}
-.card-author a{{color:inherit;text-decoration:none}}
-.card-author a:hover{{color:#4db8ff}}
-.card-meta{{font-size:12px;color:#555}}
 
 /* Footer */
 footer{{text-align:center;padding:40px;font-size:12px;color:#444}}
@@ -275,7 +205,7 @@ footer a:hover{{text-decoration:underline}}
 @media(max-width:640px){{
   .gallery{{grid-template-columns:1fr;gap:16px;padding:16px}}
   header{{padding:0 16px}}
-  .meta-bar,.legend{{padding:10px 16px}}
+  .meta-bar{{padding:10px 16px}}
 }}
 </style>
 </head>
@@ -288,23 +218,8 @@ footer a:hover{{text-decoration:underline}}
 
 <div class="meta-bar">
   <span class="date-str">{display_date} 일간 랭킹</span>
-  <span style="color:#aaa;font-size:12px">갱신: {updated_at} KST</span>
-  <div class="stats">
-    <div class="stat">
-      <div class="stat-num">{filtered_count}</div>
-      <div class="stat-label">신규 진입 작품</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">{total_count}</div>
-      <div class="stat-label">전체 랭킹</div>
-    </div>
-  </div>
-</div>
-
-<div class="legend">
-  필터 기준:
-  <span class="legend-badge badge-first">첫 등장</span> — 이 랭킹에 처음 진입
-  <span class="legend-badge badge-prev">전날 N위</span> — 전날 순위가 500위 초과
+  <span style="color:#555;font-size:12px">갱신: {updated_at} KST</span>
+  <span style="margin-left:auto;color:#4db8ff;font-weight:700">{filtered_count}작품</span>
 </div>
 
 <div class="gallery">
