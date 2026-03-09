@@ -230,18 +230,18 @@ header{{background:#0078cc;color:#fff;padding:0 32px;height:58px;display:flex;al
 .badge-first{{background:#cc2244;color:#fff}}
 .badge-prev{{background:#cc6600;color:#fff}}
 
-/* Gallery — 3열 고정 */
-.gallery{{max-width:1200px;margin:0 auto;padding:28px 24px;
-  display:grid;grid-template-columns:repeat(3,1fr);gap:20px}}
+/* Gallery — 2열 고정 */
+.gallery{{max-width:1100px;margin:0 auto;padding:28px 24px;
+  display:grid;grid-template-columns:repeat(2,1fr);gap:24px}}
 
 /* Card */
 .card{{background:#1e1e1e;border-radius:12px;overflow:hidden;
   box-shadow:0 2px 8px rgba(0,0,0,.4);transition:box-shadow .2s,transform .2s;position:relative}}
 .card:hover{{box-shadow:0 8px 28px rgba(0,0,0,.7);transform:translateY(-4px)}}
 .thumb-link{{display:block;position:relative;overflow:hidden;
-  background:#2a2a2a;aspect-ratio:1/1;text-decoration:none}}
-.thumb-link img{{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s}}
-.card:hover .thumb-link img{{transform:scale(1.06)}}
+  background:#2a2a2a;aspect-ratio:3/4;text-decoration:none}}
+.thumb-link img{{width:100%;height:100%;object-fit:contain;display:block;transition:transform .35s}}
+.card:hover .thumb-link img{{transform:scale(1.04)}}
 .img-placeholder{{width:100%;height:100%;display:flex;align-items:center;justify-content:center;
   font-size:13px;color:#555}}
 
@@ -272,13 +272,10 @@ footer a:hover{{text-decoration:underline}}
 /* Empty */
 .empty{{grid-column:1/-1;text-align:center;padding:80px;color:#555;font-size:15px}}
 
-@media(max-width:900px){{
-  .gallery{{grid-template-columns:repeat(2,1fr);gap:14px;padding:16px}}
+@media(max-width:640px){{
+  .gallery{{grid-template-columns:1fr;gap:16px;padding:16px}}
   header{{padding:0 16px}}
   .meta-bar,.legend{{padding:10px 16px}}
-}}
-@media(max-width:540px){{
-  .gallery{{grid-template-columns:1fr;gap:12px;padding:12px}}
 }}
 </style>
 </head>
