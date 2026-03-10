@@ -169,6 +169,11 @@ header{{background:#0078cc;color:#fff;padding:0 32px;height:58px;display:flex;al
 .logo{{font-size:22px;font-weight:800;letter-spacing:-0.5px}}
 .logo span{{color:#ffe44d}}
 .subtitle{{font-size:13px;opacity:.8}}
+.refresh-btn{{margin-left:auto;display:inline-flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3);
+  border-radius:8px;padding:6px 14px;font-size:13px;font-weight:600;text-decoration:none;
+  cursor:pointer;transition:background .2s}}
+.refresh-btn:hover{{background:rgba(255,255,255,.28)}}
 
 /* Meta bar */
 .meta-bar{{background:#1a1a1a;border-bottom:1px solid #2a2a2a;padding:12px 32px;
@@ -217,6 +222,7 @@ footer a:hover{{text-decoration:underline}}
 <header>
   <div class="logo">Pixiv<span>NEW</span></div>
   <div class="subtitle">일간 랭킹 신규 진입 작품 모아보기</div>
+  <a class="refresh-btn" href="https://github.com/philocsera/Daily-Pixiv/actions/workflows/update.yml" target="_blank">&#x21bb; 지금 갱신</a>
 </header>
 
 <div class="meta-bar">
